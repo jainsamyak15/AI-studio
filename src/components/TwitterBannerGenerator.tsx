@@ -65,8 +65,8 @@ const TwitterBannerGenerator: React.FC = () => {
             <Image
               src={generatedBannerUrl}
               alt="Generated Twitter Banner"
-              width={1500}
-              height={500}
+              width={1440}
+              height={576}
               className="w-full h-auto transition-transform transform hover:scale-105"
             />
           </div>

@@ -59,7 +59,7 @@ const LogoGenerator: React.FC = () => {
       {generatedLogoUrl && (
         <div className="bg-white p-6 rounded-2xl shadow-xl text-center">
           <h3 className="text-2xl font-bold mb-4">Generated Logo</h3>
-          <Image src={generatedLogoUrl} alt="Generated Logo" width={512} height={512} className="w-full h-auto mx-auto rounded-lg" />
+          <Image src={generatedLogoUrl} alt="Generated Logo" width={320} height={320} className="w-full h-auto mx-auto rounded-lg" />
           <a
             href={generatedLogoUrl}
             download="generated_logo.png"

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Together from 'together-ai';
-import enhancePrompt from '../../utils/enhancePrompt';
+import { enhanceBannerPrompt } from '../../utils/enhancePrompt';
 
 const together = new Together({ apiKey: process.env.TOGETHER_API_KEY });
 
@@ -11,20 +11,18 @@ export default async function handler(req, res) {
 
   try {
     const { prompt } = req.body;
-    const enhancedPrompt = enhancePrompt(prompt);
-
+    const enhancedPrompt = enhanceBannerPrompt(prompt);
     const response = await together.images.create({
       model: "black-forest-labs/FLUX.1-schnell-Free",
       prompt: enhancedPrompt,
-      width: 1440,
+      width: 1440,  // Slightly larger to account for potential cropping
       height: 576,
+      steps: 4,    // Increased for better results
       n: 1,
+      negative_prompt: "blur, pixelated, low quality, text overlap,Twitter logo, Facebook logo, social media logos, user interface, text, words, letters, watermark, signature, blurry, low quality"
     });
 
-    // Assuming the response structure contains the image URL
     const imageUrl = response.data[0].url;
-    console.log('Generated Twitter banner:', imageUrl);
-
     res.status(200).json({ imageUrl });
   } catch (error) {
     console.error('Error generating Twitter banner:', error);

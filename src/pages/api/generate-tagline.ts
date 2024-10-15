@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Together from 'together-ai';
-import enhancePrompt from '../../utils/enhancePrompt';
+import { enhanceTaglinePrompt } from '../../utils/enhancePrompt';
 
 const together = new Together({ apiKey: process.env.TOGETHER_API_KEY });
 
@@ -11,17 +11,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { prompt } = req.body;
-    const enhancedPrompt = enhancePrompt(`Generate a catchy and memorable tagline for: ${prompt}`);
-
+    const enhancedPrompt = enhanceTaglinePrompt(prompt);
     const response = await together.chat.completions.create({
       messages: [{ role: 'user', content: enhancedPrompt }],
       model: "meta-llama/Llama-Vision-Free",
-      max_tokens: 50,
-      temperature: 0.7,
-      top_p: 0.7,
+      max_tokens: 100,  // Reduced to encourage brevity
+      temperature: 0.85,  // Slightly increased for more creativity
+      top_p: 0.95,
       top_k: 50,
-      repetition_penalty: 1,
-      stop: ["<|eot_id|>", "<|eom_id|>"],
+      repetition_penalty: 1.2,
+      stop: ["\n\n", "Human:", "Assistant:"],
     });
 
     const tagline = response.choices?.[0]?.message?.content?.trim() ?? '';
