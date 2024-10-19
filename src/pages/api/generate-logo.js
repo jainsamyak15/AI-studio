@@ -16,12 +16,12 @@ export default async function handler(req, res) {
     const response = await together.images.create({
       model: "black-forest-labs/FLUX.1-schnell-Free",
       prompt: enhancedPrompt,
-      width: 512,  // Increased for higher quality
-      height: 512, // Increased for higher quality
+      width: 1792,   // Max allowed width
+      height: 1792,
       steps: 4,    // Increased for more detailed results
       n: 1,         // Generate multiple options
       negative_prompt: "existing logos, Apple logo, Starbucks logo, Nike swoosh, copyright infringement, text, words, letters, busy, cluttered, complex, low quality, blurry, amateurish",
-      cfg_scale: 8.5, // Increased for stronger adherence to prompt
+      cfg_scale: 15, // Increased for stronger adherence to prompt
     });
 
 
